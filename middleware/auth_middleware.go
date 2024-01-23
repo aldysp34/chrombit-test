@@ -18,6 +18,10 @@ func AuthorizeHandler() gin.HandlerFunc {
 			ctx.Next()
 			return
 		}
+		if strings.HasPrefix(ctx.Request.URL.Path, "/api/v1/auth") {
+			ctx.Next()
+			return
+		}
 
 		var response dto.Response
 		header := ctx.Request.Header["Authorization"]

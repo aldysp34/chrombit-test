@@ -12,7 +12,7 @@ type JWTClaims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateAccessToken(claims JWTClaims) (string, error) {
+func GenerateToken(claims JWTClaims) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims.Issuer = os.Getenv("APP_NAME")
 	claims.IssuedAt = jwt.NewNumericDate(time.Now())

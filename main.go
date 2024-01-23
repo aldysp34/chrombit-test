@@ -16,8 +16,11 @@ type routerOpts struct {
 func main() {
 	blogUsecase := usecase.NewBlogUsecase()
 	blogHandler := handler.NewBlogHandler(blogUsecase)
+	authUsecase := usecase.NewAuthUsecase()
+	authHandler := handler.NewAuthHandler(authUsecase)
 	opts := routerOpts{
 		blogHandler: blogHandler,
+		authHandler: authHandler,
 	}
 	router := gin.New()
 
@@ -32,9 +35,8 @@ func main() {
 	blogs.PUT("/:id", opts.blogHandler.EditBlog)
 	blogs.DELETE("/:id", opts.blogHandler.DeleteBlog)
 
-	// auth := router.Group("/api/v1/auth")
-	// auth.POST("/login", opts.authHandler.Login)
-	// auth.POST("/register", opts.authHandler.Register)
+	auth := router.Group("/api/v1/auth")
+	auth.POST("/login", opts.authHandler.Login)
 
 	router.Run(":8080")
 }
